@@ -25,7 +25,7 @@ end
 
 function HorizonSideRobots.move!(robot::MarkRobot, side::HorizonSide) 
     if isborder(robot, Nord) || isborder(robot, Ost) || isborder(robot, Sud) || isborder(robot, West)
-        putmarker!(robot.robot)
+        putmarker!(robot)
     end
     move!(robot.robot, side)
 end
@@ -41,7 +41,7 @@ function snake!(stop_condition::Function, robot::MarkRobot, sides::NTuple{2, Hor
             break
         end
         s = inverse(s)
-        move!(robot.robot, sides[2])
+        move!(robot, sides[2])
     end
 end
 
@@ -58,7 +58,6 @@ function corner!(robot, sides::NTuple{2, HorizonSide})
     end
 end
 
-HorizonSideRobots.isborder(robot::MarkRobot, side::NTuple{2, HorizonSide}) = isborder(robot, side[1]) || isborder(robot, side[2])
 HorizonSideRobots.isborder(robot::MarkRobot, side) = isborder(robot.robot, side)
 HorizonSideRobots.putmarker!(robot::MarkRobot) = putmarker!(robot.robot)
 inverse(side::HorizonSide) = HorizonSide(mod(Int(side)+2, 4))
