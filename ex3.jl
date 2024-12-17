@@ -8,10 +8,25 @@
 
 using HorizonSideRobots
 
+mutable struct ChessRobot
+    robot::Robot
+    flag::Bool
+end
+
+function markfield!(robot)
+    robot = ChessRobot(robot, true)
+    corner(robot, (West, Sud))
+    robot.flag = !robot.flag
+    snake!(robot, (Ost,Nord)) do s 
+        isborder(robot,s)&&isborder(robot,Nord)
+    end
+    corner(robot, (West, Sud))
+end
+
 function snake!(stop_condition::Function, robot, sides::NTuple{2, HorizonSide})
     s = sides[1]
     while !stop_condition(s)
-        movetoend!(robot, s) do
+        movetoend!(robot, s, true) do
             stop_condition(s) || isborder(robot, s)
         end
         if stop_condition(s)
@@ -37,6 +52,13 @@ function corner!(robot, sides::NTuple{2, HorizonSide})
     end
 end
 
+function HorizonSideRobots.move!(robot::ChessRobot, side)
+    robot.flag && putmarker!(robot.robot)
+    move!(robot.robot, side)
+end
+
+HorizonSideRobots.isborder(robot::ChessRobot, side) = isborder(robot.robot, side)
+HorizonSideRobots.putmarker!(robot::ChessRobot) = putmarker!(robot.robot)
 #=
 corner(robot, (West, Sud)); snake!(robot, (Ost,Nord)) do s isborder(robot,s)&&isborder(robot,Nord) end
 =#

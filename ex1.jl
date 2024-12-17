@@ -29,9 +29,8 @@ end
 HorizonSideRobots.move!(robot, side, n_steps) = for _ in 1:n_steps move!(robot, side) end
 
 inverse(side::HorizonSide) = HorizonSide(mod(Int(side)+2, 4))
-inverse(side::NTuple{2, HorizonSide}) = inverse.(side)
 HorizonSideRobots.isborder(robot, side::NTuple{2, HorizonSide}) = isborder(robot, side[1]) || isborder(robot, side[2])
 
-#HorizonSideRobots.move!(robot, side::Any) = for s in side move!(robot, s) end
+HorizonSideRobots.move!(robot, side::Any) = for s in side move!(robot, s) end
 
-#mark_cross(robot, (Nord, Ost, Sud, West))
+#cross!(robot, (Nord, Ost, Sud, West))

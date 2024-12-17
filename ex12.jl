@@ -1,3 +1,8 @@
+#=12. Отличается от предыдущей задачи тем, что если в перегородке имеются
+разрывы не более одной клетки каждый, то такая перегородка считается одной
+перегородкой.
+=#
+
 using HorizonSideRobots
 
 function counter!(robot)
@@ -43,3 +48,5 @@ function do_upora(robot, side)
 end
 
 inverse(side::HorizonSide) = HorizonSide((Int(side)+2)%4)
+
+#counter!(robot)

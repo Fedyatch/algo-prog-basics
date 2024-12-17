@@ -1,8 +1,24 @@
+#=
+2. ДАНО: Робот - в произвольной клетке поля (без внутренних перегородок
+и маркеров)
+РЕЗУЛЬТАТ: Робот - в исходном положении, и все клетки по периметру
+внешней рамки промаркированы.
+=#
+
 using HorizonSideRobots
 
 mutable struct ChessRobot
     robot::Robot
     flag::Bool
+end
+
+function perimeter!(robot)
+    robot = ChessRobot(robot, true)
+    corner(robot, (Sud, West))
+    robot.flag = !robot.flag
+    for s in (Nord, Ost, Sud, West)
+        movetoend!(robot, s)
+    end
 end
 
 function HorizonSideRobots.move!(robot::ChessRobot, side)
@@ -16,12 +32,6 @@ function corner(robot, side)
     robot.flag = !robot.flag
     for s in side 
         movetoend!(robot, s) 
-    end
-end
-
-function perimeter!(robot)
-    for s in (Nord, Ost, Sud, West)
-        movetoend!(robot, s)
     end
 end
 

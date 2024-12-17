@@ -12,7 +12,8 @@ mutable struct MarkRobot
     robot::Robot
 end
 
-function mark!(robot::MarkRobot)
+function mark!(robot)
+    robot = MarkRobot(robot)
     corner!(robot, (Sud, West))
     snake!(robot, (Ost, Nord)) do side
         isborder(robot, side) && isborder(robot, Nord)
@@ -21,6 +22,7 @@ function mark!(robot::MarkRobot)
     snake!(robot, (West, Sud)) do side
         isborder(robot, side) && isborder(robot, Sud)
     end
+    corner!(robot, (Sud, West))
 end
 
 function HorizonSideRobots.move!(robot::MarkRobot, side::HorizonSide) 

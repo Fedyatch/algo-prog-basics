@@ -1,3 +1,10 @@
+#=
+8. ДАНО: Где-то на неограниченном со всех сторон поле без внутренних
+перегородок имеется единственный маркер. Робот - в произвольной клетке этого
+поля.
+РЕЗУЛЬТАТ: Робот - в клетке с маркером.
+=#
+
 using HorizonSideRobots
 
 function findmarker!(robot)::Nothing
@@ -18,3 +25,5 @@ function findmarker!(robot, side, max_nsteps)::Bool
 end
 
 left(side::HorizonSide) = HorizonSide((Int(side)+1)%4)
+
+#findmarker!(robot)
