@@ -92,10 +92,10 @@ println(gcdx_(48, 18))
 
 #6 задание
 
-struct Residue{T, M} <: Number where {T<:Integer, M}
+struct Residue{M, T} <: Number where {T<:Integer, M}
     value::T
-    function Residue{T, M}(x::T) where {T<:Integer, M}
-        new{T, M}(mod(x, M))  # Приводим к модулю M
+    function Residue{M}(x) where {M}
+        new{typeof(x), M}(mod(x, M))  # Приводим к модулю M
     end
 end
 
@@ -106,8 +106,8 @@ Base.:*(a::Residue{T, M}, b::Residue{T, M}) where {T, M} = Residue{T, M}(a.value
 Base.zero(::Type{Residue{T, M}}) where {T, M} = Residue{T, M}(zero(T))
 Base.one(::Type{Residue{T, M}}) where {T, M} = Residue{T, M}(one(T))
 
-r1 = Residue{Int, 5}(7)
-r2 = Residue{Int, 5}(9)
+r1 = Residue{5}(7)
+r2 = Residue{5}(9)
 println(r1.value)
 println(r2.value)
 
